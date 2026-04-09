@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  username     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  profile      UserProfile?
+}
+
+model UserProfile {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName     String?
+  careers      CareerGoal[]
+  education    Education[]
+  internships  Internship[]
+  experiences  Experience[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model CareerGoal {
+  id           String   @id @default(uuid())
+  profileId    String
+  profile      UserProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title        String
+  createdAt    DateTime @default(now())
+}
+
+model Education {
+  id           String   @id @default(uuid())
+  profileId    String
+  profile      UserProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  institution  String
+  degree       String
+  field        String
+  startDate    String?
+  endDate      String?
+  createdAt    DateTime @default(now())
+}
+
+model Internship {
+  id           String   @id @default(uuid())
+  profileId    String
+  profile      UserProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  company      String
+  position     String
+  startDate    String?
+  endDate      String?
+  description  String?
+  createdAt    DateTime @default(now())
+}
+
+model Experience {
+  id           String   @id @default(uuid())
+  profileId    String
+  profile      UserProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title        String
+  company      String
+  startDate    String?
+  endDate      String?
+  description  String?
+  createdAt    DateTime @default(now())
+}
