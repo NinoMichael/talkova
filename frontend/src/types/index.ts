@@ -54,3 +54,36 @@ export interface LoginData {
 export interface AuthResponse {
   user: User;
 }
+
+export interface Interview {
+  id: string;
+  userId: string;
+  jobTitle: string;
+  company?: string;
+  status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+  score?: number;
+  feedback?: string;
+  questions?: InterviewQuestion[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface InterviewQuestion {
+  id: string;
+  interviewId: string;
+  question: string;
+  answer?: string;
+  feedback?: string;
+  score?: number;
+}
+
+export interface InterviewStats {
+  totalInterviews: number;
+  averageScore: number;
+  totalQuestions: number;
+  recentScores: {
+    score: number;
+    date: string;
+    jobTitle: string;
+  }[];
+}

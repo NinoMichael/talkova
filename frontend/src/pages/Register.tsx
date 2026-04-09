@@ -71,7 +71,7 @@ export default function Register() {
       });
       
       login(result.user);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || "Erreur lors de l'inscription");
       setIsLoading(false);

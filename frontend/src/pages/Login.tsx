@@ -27,7 +27,7 @@ export default function Login() {
     try {
       const result = await authService.login({ email, password });
       login(result.user);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Erreur de connexion');
       setIsLoading(false);

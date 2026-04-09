@@ -15,6 +15,7 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   profile      UserProfile?
+  interviews   Interview[]
 }
 
 model UserProfile {
@@ -72,4 +73,36 @@ model Experience {
   endDate      String?
   description  String?
   createdAt    DateTime @default(now())
+}
+
+model Interview {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobTitle     String
+  company      String?
+  status       InterviewStatus @default(PENDING)
+  score        Int?
+  feedback     String?
+  questions    InterviewQuestion[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model InterviewQuestion {
+  id           String   @id @default(uuid())
+  interviewId  String
+  interview    Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  question     String
+  answer       String?
+  feedback     String?
+  score        Int?
+  createdAt    DateTime @default(now())
+}
+
+enum InterviewStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
 }
