@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { interviewController } from "../controllers/interviewController.js";
-
 const router = Router();
-
 router.post("/", interviewController.create);
 router.get("/", interviewController.getAll);
 router.get("/stats", interviewController.getStats);
@@ -10,5 +8,4 @@ router.get("/:id", interviewController.getById);
 router.patch("/:id", interviewController.update);
 router.post("/:id/context", interviewController.generateContext);
 router.post("/:id/complete", interviewController.complete);
-
 export default router;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button, Input, Card } from '../components/ui';
 import { Logo } from '../components/features/Logo';
@@ -7,7 +7,6 @@ import { authService } from '../services/auth';
 import { useAuthStore } from '../store/authStore';
 
 export default function Login() {
-  const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,7 +26,6 @@ export default function Login() {
     try {
       const result = await authService.login({ email, password });
       login(result.user);
-      navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Erreur de connexion');
       setIsLoading(false);

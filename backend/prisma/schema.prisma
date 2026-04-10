@@ -81,6 +81,7 @@ model Interview {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   jobTitle     String
   company      String?
+  context      Json?
   status       InterviewStatus @default(PENDING)
   score        Int?
   feedback     String?

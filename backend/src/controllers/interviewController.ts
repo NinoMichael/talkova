@@ -99,4 +99,22 @@ export const interviewController = {
 				.json({ error: error.message || "Failed to complete interview" });
 		}
 	},
+
+	async update(req: Request, res: Response) {
+		try {
+			const { id } = req.params;
+			const { context, jobTitle, company, status } = req.body;
+
+			const interview = await interviewService.update(id, {
+				context,
+				jobTitle,
+				company,
+				status,
+			});
+
+			res.json(interview);
+		} catch (error: any) {
+			res.status(400).json({ error: error.message || "Failed to update interview" });
+		}
+	},
 };

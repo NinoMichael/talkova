@@ -6,6 +6,13 @@ export interface CreateInterviewInput {
   company?: string;
 }
 
+export interface UpdateInterviewInput {
+  context?: any;
+  jobTitle?: string;
+  company?: string;
+  status?: string;
+}
+
 export const interviewService = {
   async create(input: CreateInterviewInput) {
     const interview = await prisma.interview.create({
@@ -14,6 +21,19 @@ export const interviewService = {
         jobTitle: input.jobTitle,
         company: input.company || null,
         status: 'PENDING',
+      },
+    });
+    return interview;
+  },
+
+  async update(id: string, input: UpdateInterviewInput) {
+    const interview = await prisma.interview.update({
+      where: { id },
+      data: {
+        ...(input.context && { context: input.context }),
+        ...(input.jobTitle && { jobTitle: input.jobTitle }),
+        ...(input.company && { company: input.company }),
+        ...(input.status && { status: input.status }),
       },
     });
     return interview;
